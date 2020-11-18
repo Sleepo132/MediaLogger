@@ -12,7 +12,7 @@ public class Driver extends JFrame implements ActionListener {
 	private JButton anime;
 	private JButton manga;
 	private JLabel message;
-	private JPanel panel = new JPanel();
+	private static JPanel panel = new JPanel();
 	private byte check;
 	private String type;
 
@@ -30,13 +30,16 @@ public class Driver extends JFrame implements ActionListener {
 		manga = new JButton("Manga");
 		message = new JLabel("Choose what you would like to log.");
 		check = 10;
-		
+
 		movie.addActionListener(this); // Adds listener to movie
 		show.addActionListener(this);
 		anime.addActionListener(this);
 		manga.addActionListener(this);
-		
-		
+
+		if (check == 1) {
+			clearScreen();
+		}
+
 		panel.add(message, new GridBagConstraints());
 		panel.add(anime, new GridBagConstraints());
 		panel.add(manga, new GridBagConstraints());
@@ -46,13 +49,9 @@ public class Driver extends JFrame implements ActionListener {
 		add(panel); // Adds the panel
 		setVisible(true); // Lets person see panel
 		setResizable(false); // Cannot resize window
-		
-		if (checkType().equals("Movie") ) {
-			panel.removeAll();
-		}
-		
+
 	}
-	
+
 	public JButton buttonGetter(JButton value) {
 		return value;
 	}
@@ -60,6 +59,7 @@ public class Driver extends JFrame implements ActionListener {
 	public byte getCheck() {
 		return check;
 	}
+
 	// Checks what has been clicked by user
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == movie) {
@@ -73,13 +73,14 @@ public class Driver extends JFrame implements ActionListener {
 		}
 	}
 
-	/* Method is used to clear screen after a choice has been made, allowing the
+	/*
+	 * Method is used to clear screen after a choice has been made, allowing the
 	 * user to enter the name of the show, movie, etc..
 	 */
-	public void clearScreen() {
+	public static void clearScreen() {
 		panel.removeAll();
-		revalidate();
-		repaint();
+		panel.revalidate();
+		panel.repaint();
 	}
 
 	public String checkType() {
