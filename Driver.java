@@ -29,7 +29,7 @@ public class Driver extends JFrame implements ActionListener {
 		anime = new JButton("Anime");
 		manga = new JButton("Manga");
 		message = new JLabel("Choose what you would like to log.");
-		check = 6;
+		check = 10;
 		
 		movie.addActionListener(this); // Adds listener to movie
 		show.addActionListener(this);
@@ -46,10 +46,11 @@ public class Driver extends JFrame implements ActionListener {
 		add(panel); // Adds the panel
 		setVisible(true); // Lets person see panel
 		setResizable(false); // Cannot resize window
-
+		
 		if (checkType().equals("Movie") ) {
-			clearScreen();
+			panel.removeAll();
 		}
+		
 	}
 	
 	public JButton buttonGetter(JButton value) {
@@ -86,19 +87,23 @@ public class Driver extends JFrame implements ActionListener {
 		switch (check) {
 		case 0:
 			type = "Movie";
-			clearScreen();
+			panel.removeAll();
 			break;
 		case 1:
 			type = "Show";
-			clearScreen();
+			panel.removeAll();
 			break;
 		case 2:
 			type = "Anime";
-			clearScreen();
+			panel.removeAll();
 			break;
 		case 3:
 			type = "Manga";
-			clearScreen();
+			panel.removeAll();
+			break;
+		default:
+			type = "none";
+			panel.removeAll();
 			break;
 		}
 
