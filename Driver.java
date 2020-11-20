@@ -16,7 +16,7 @@ public class Driver extends JFrame implements ActionListener {
 	private JTextField movieText, showText, animeText, mangaText
 	, movieText2, showText2, animeText2, mangaText2;
 	private static JPanel panel = new JPanel();
-	private String movieName;
+	private static String movieName;
 	private String type;
 	private JPanel panel2 = new JPanel();
 	public static String textS;
@@ -35,6 +35,8 @@ public class Driver extends JFrame implements ActionListener {
 		anime = new JButton("Anime");
 		manga = new JButton("Manga");
 		message = new JLabel("Choose what you would like to log.");
+		
+		message.setBounds(400, 300, message.getWidth(), message.getHeight());
 		movieText = new JTextField();
 		showText = new JTextField();
 		animeText = new JTextField();
@@ -78,9 +80,14 @@ public class Driver extends JFrame implements ActionListener {
 		if (e.getSource() == movie) {
 			type = "Movie";
 			clearScreen();
+			movieName = movieText.getText();
 			afterButton();
-			System.out.println(textS);
-			WriteToFile.writeToFile(movieName);
+			
+			if (movieName.equals(null)){
+				
+			} else {
+				WriteToFile.writeToFile(movieName);
+			}
 			
 		} else if (e.getSource() == show) {
 			type = "Show";
@@ -108,11 +115,6 @@ public class Driver extends JFrame implements ActionListener {
 		panel.removeAll();
 		panel.revalidate();
 		panel.repaint();
-	}
-
-	public String getText() {
-		return movieName;
-
 	}
 
 	public void afterButton() {
@@ -167,7 +169,7 @@ public class Driver extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == okay) {
 					clearScreen();
-					textS = type.getText();
+					movieName = type.getText();
 				}
 				
 			}
