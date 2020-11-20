@@ -6,16 +6,20 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class Driver extends JFrame implements ActionListener {
 
 	private JButton movie, show, anime, manga;
 	private JLabel message;
-	private JTextField movieText, showText, animeText, mangaText;
+	private JTextField movieText, showText, animeText, mangaText
+	, movieText2, showText2, animeText2, mangaText2;
 	private static JPanel panel = new JPanel();
 	private String movieName;
 	private String type;
 	private JPanel panel2 = new JPanel();
+	public static String textS;
 
 	public static void main(String[] args) {
 		new Driver();
@@ -62,6 +66,7 @@ public class Driver extends JFrame implements ActionListener {
 		setVisible(true); // Lets person see panel
 		setResizable(false); // Cannot resize window
 		System.out.println(movieName);
+		
 	}
 
 	public JButton buttonGetter(JButton value) {
@@ -74,15 +79,24 @@ public class Driver extends JFrame implements ActionListener {
 			type = "Movie";
 			clearScreen();
 			afterButton();
+			System.out.println(textS);
+			WriteToFile.writeToFile(movieName);
+			
 		} else if (e.getSource() == show) {
 			type = "Show";
 			clearScreen();
+			afterButton();
+			
 		} else if (e.getSource() == anime) {
 			type = "Anime";
 			clearScreen();
+			afterButton();
+			
 		} else if (e.getSource() == manga) {
 			type = "Manga";
 			clearScreen();
+			afterButton();
+			
 		}
 	}
 
@@ -96,19 +110,70 @@ public class Driver extends JFrame implements ActionListener {
 		panel.repaint();
 	}
 
+	public String getText() {
+		return movieName;
+
+	}
+
 	public void afterButton() {
 		if (type.equals("Movie")) {
-			panel.add(new JLabel("Which movie would you like to log?"));
-			movieText.addActionListener(this);
-			movieText.setPreferredSize(new Dimension(100, 25));
-			panel.add(movieText);
-			movieName = movieText.getText();
+			whichType(movieText);
 		} else if (type.equals("Manga")) {
-			panel.add(new JLabel("Which manga would you like to log?"));
+			whichType(mangaText);
 		} else if (type.equals("Anime")) {
-			panel.add(new JLabel("Which anime would you like to log?"));
+			whichType(animeText);
 		} else if (type.equals("Show")) {
-			panel.add(new JLabel("Which show would you like to log?"));
+			whichType(showText);
 		}
 	}
+	
+	public void afterButton2() {
+		if (type.equals("Movie")){
+			
+		}
+	}
+
+	public void whichType(JTextField type) {
+		type.setPreferredSize(new Dimension(300, 25));
+		panel.add(type);
+		JButton okay = new JButton("Ok");
+		panel.add(okay);
+		type.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				movieName = type.getText();
+			}
+
+		});
+
+		type.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				type.setText("");
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				type.setText("Enter the media you would like to log...");
+
+			}
+
+		});
+	
+		okay.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == okay) {
+					clearScreen();
+					textS = type.getText();
+				}
+				
+			}
+			
+		});
+	}
 }
+
+
