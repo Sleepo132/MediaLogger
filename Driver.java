@@ -36,7 +36,6 @@ public class Driver extends JFrame implements ActionListener {
 		manga = new JButton("Manga");
 		message = new JLabel("Choose what you would like to log.");
 		
-		message.setBounds(400, 300, message.getWidth(), message.getHeight());
 		movieText = new JTextField();
 		showText = new JTextField();
 		animeText = new JTextField();
@@ -80,15 +79,13 @@ public class Driver extends JFrame implements ActionListener {
 		if (e.getSource() == movie) {
 			type = "Movie";
 			clearScreen();
-			movieName = movieText.getText();
 			afterButton();
 			
-			if (movieName.equals(null)){
-				
+			if (movieName != null) {
+			WriteToFile.writeToFile(movieName);
 			} else {
-				WriteToFile.writeToFile(movieName);
+				System.out.println("Name of movie is not valid.");
 			}
-			
 		} else if (e.getSource() == show) {
 			type = "Show";
 			clearScreen();
@@ -169,7 +166,6 @@ public class Driver extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == okay) {
 					clearScreen();
-					movieName = type.getText();
 				}
 				
 			}
