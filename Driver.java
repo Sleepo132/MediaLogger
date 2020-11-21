@@ -15,8 +15,8 @@ public class Driver extends JFrame implements ActionListener {
 	private JLabel message;
 	private JTextField movieText, numberOf;
 	private static JPanel panel = new JPanel();
-	private static String movieName, showNum;
-	private String type;
+	public static String movieName, showNum;
+	public static String type;
 	private JPanel panel2 = new JPanel();
 	public static String textS;
 
@@ -34,6 +34,8 @@ public class Driver extends JFrame implements ActionListener {
 		manga = new JButton("Manga");
 		message = new JLabel("Choose what you would like to log.");
 
+		movieText = new JTextField("Enter the media here");
+		
 		movie.setFocusable(false);
 		show.setFocusable(false);
 		manga.setFocusable(false);
@@ -72,22 +74,22 @@ public class Driver extends JFrame implements ActionListener {
 			type = "Movie";
 			clearScreen();
 			whichType(movieText);
-
+			WriteToFile.writeToFile();
 		} else if (e.getSource() == show) {
 			type = "Show";
 			clearScreen();
 			whichType(movieText);
-
+			WriteToFile.writeToFile();
 		} else if (e.getSource() == anime) {
 			type = "Anime";
 			clearScreen();
 			whichType(movieText);
-
+			WriteToFile.writeToFile();
 		} else if (e.getSource() == manga) {
 			type = "Manga";
 			clearScreen();
 			whichType(movieText);
-
+			WriteToFile.writeToFile();
 		}
 	}
 
@@ -106,6 +108,7 @@ public class Driver extends JFrame implements ActionListener {
 			numberOf = new JTextField("Enter the amount of episodes watched.");
 			panel.add(numberOf);
 			JButton okay2 = new JButton("OK");
+			panel.add(okay2);
 			numberOf.setPreferredSize(new Dimension(300, 25));
 
 			numberOf.addActionListener(new ActionListener() {
@@ -130,6 +133,7 @@ public class Driver extends JFrame implements ActionListener {
 			numberOf = new JTextField("Enter the amount of chapters read.");
 			panel.add(numberOf);
 			JButton okay2 = new JButton("OK");
+			panel.add(okay2);
 			numberOf.setPreferredSize(new Dimension(300, 25));
 
 			numberOf.addActionListener(new ActionListener() {
@@ -155,7 +159,6 @@ public class Driver extends JFrame implements ActionListener {
 	public void whichType(JTextField type) {
 		JButton okay = new JButton("Ok");
 		type.setPreferredSize(new Dimension (300, 25));
-		type = new JTextField();
 		panel.add(type);
 		panel.add(okay);
 		type.addActionListener(new ActionListener() {
@@ -174,12 +177,15 @@ public class Driver extends JFrame implements ActionListener {
 					movieName = type.getText();
 					if (movieName == null || movieName.isBlank()) {
 						System.out.println("Name of media is not valid.");
-						clearScreen();
-						afterButton();
+						
 					}
+					clearScreen();
+					afterButton();
 				}
 
 			}
 		});
 	}
+	
+	
 }
