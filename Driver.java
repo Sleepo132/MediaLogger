@@ -13,10 +13,9 @@ public class Driver extends JFrame implements ActionListener {
 
 	private JButton movie, show, anime, manga;
 	private JLabel message;
-	private JTextField movieText, showText, animeText, mangaText
-	, movieText2, showText2, animeText2, mangaText2;
+	private JTextField movieText, numberOf;
 	private static JPanel panel = new JPanel();
-	private static String movieName;
+	private static String movieName, showNum;
 	private String type;
 	private JPanel panel2 = new JPanel();
 	public static String textS;
@@ -26,7 +25,6 @@ public class Driver extends JFrame implements ActionListener {
 	}
 
 	public Driver() {
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 800);
 		panel.setLayout(new GridBagLayout());
@@ -35,11 +33,6 @@ public class Driver extends JFrame implements ActionListener {
 		anime = new JButton("Anime");
 		manga = new JButton("Manga");
 		message = new JLabel("Choose what you would like to log.");
-		
-		movieText = new JTextField();
-		showText = new JTextField();
-		animeText = new JTextField();
-		mangaText = new JTextField();
 
 		movie.setFocusable(false);
 		show.setFocusable(false);
@@ -67,7 +60,6 @@ public class Driver extends JFrame implements ActionListener {
 		setVisible(true); // Lets person see panel
 		setResizable(false); // Cannot resize window
 		System.out.println(movieName);
-		
 	}
 
 	public JButton buttonGetter(JButton value) {
@@ -79,28 +71,23 @@ public class Driver extends JFrame implements ActionListener {
 		if (e.getSource() == movie) {
 			type = "Movie";
 			clearScreen();
-			afterButton();
-			
-			if (movieName != null) {
-			WriteToFile.writeToFile(movieName);
-			} else {
-				System.out.println("Name of movie is not valid.");
-			}
+			whichType(movieText);
+
 		} else if (e.getSource() == show) {
 			type = "Show";
 			clearScreen();
-			afterButton();
-			
+			whichType(movieText);
+
 		} else if (e.getSource() == anime) {
 			type = "Anime";
 			clearScreen();
-			afterButton();
-			
+			whichType(movieText);
+
 		} else if (e.getSource() == manga) {
 			type = "Manga";
 			clearScreen();
-			afterButton();
-			
+			whichType(movieText);
+
 		}
 	}
 
@@ -115,63 +102,82 @@ public class Driver extends JFrame implements ActionListener {
 	}
 
 	public void afterButton() {
-		if (type.equals("Movie")) {
-			whichType(movieText);
+		if (type.equals("Show") || type.equals("Anime")) {
+			numberOf = new JTextField("Enter the amount of episodes watched.");
+			panel.add(numberOf);
+			JButton okay2 = new JButton("OK");
+			numberOf.setPreferredSize(new Dimension(300, 25));
+
+			numberOf.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showNum = numberOf.getText();
+				}
+
+			});
+
+			okay2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showNum = numberOf.getText();
+				}
+
+			});
+
 		} else if (type.equals("Manga")) {
-			whichType(mangaText);
-		} else if (type.equals("Anime")) {
-			whichType(animeText);
-		} else if (type.equals("Show")) {
-			whichType(showText);
-		}
-	}
-	
-	public void afterButton2() {
-		if (type.equals("Movie")){
-			
+			numberOf = new JTextField("Enter the amount of chapters read.");
+			panel.add(numberOf);
+			JButton okay2 = new JButton("OK");
+			numberOf.setPreferredSize(new Dimension(300, 25));
+
+			numberOf.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showNum = numberOf.getText();
+				}
+
+			});
+
+			okay2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					showNum = numberOf.getText();
+				}
+
+			});
 		}
 	}
 
 	public void whichType(JTextField type) {
-		type.setPreferredSize(new Dimension(300, 25));
 		panel.add(type);
 		JButton okay = new JButton("Ok");
 		panel.add(okay);
 		type.addActionListener(new ActionListener() {
+			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				movieName = type.getText();
 			}
-
 		});
 
-		type.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				type.setText("");
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				type.setText("Enter the media you would like to log...");
-
-			}
-
-		});
-	
 		okay.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == okay) {
-					clearScreen();
+					movieName = type.getText();
+					if (movieName == null || movieName.isBlank()) {
+						System.out.println("Name of media is not valid.");
+						clearScreen();
+						afterButton();
+					}
 				}
-				
+
 			}
-			
 		});
 	}
 }
-
-
