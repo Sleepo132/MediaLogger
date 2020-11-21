@@ -153,8 +153,10 @@ public class Driver extends JFrame implements ActionListener {
 	}
 
 	public void whichType(JTextField type) {
-		panel.add(type);
 		JButton okay = new JButton("Ok");
+		type.setPreferredSize(new Dimension (300, 25));
+		type = new JTextField();
+		panel.add(type);
 		panel.add(okay);
 		type.addActionListener(new ActionListener() {
 			
